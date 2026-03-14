@@ -1,0 +1,60 @@
+{
+  "wallets": [
+    {
+      "name": "Main Wallet",
+      "network": "ethereum",
+      "tokens": [
+        {"symbol": "BTC",  "name": "Bitcoin"},
+        {"symbol": "ETH",  "name": "Ethereum"},
+        {"symbol": "SOL",  "name": "Solana"},
+        {"symbol": "LINK", "name": "Chainlink"},
+        {"symbol": "AVAX", "name": "Avalanche"}
+      ],
+      "transactions": [
+        {"symbol": "BTC",  "tx_type": "buy",  "quantity": 0.25,  "price_per_unit": 62000.00, "notes": "Initial BTC position"},
+        {"symbol": "BTC",  "tx_type": "buy",  "quantity": 0.10,  "price_per_unit": 65000.00, "notes": "DCA buy"},
+        {"symbol": "ETH",  "tx_type": "buy",  "quantity": 3.0,   "price_per_unit": 3200.00,  "notes": "Initial ETH position"},
+        {"symbol": "ETH",  "tx_type": "buy",  "quantity": 2.0,   "price_per_unit": 3500.00,  "notes": "Added more ETH"},
+        {"symbol": "ETH",  "tx_type": "sell", "quantity": 1.0,   "price_per_unit": 3600.00,  "notes": "Took partial profits"},
+        {"symbol": "SOL",  "tx_type": "buy",  "quantity": 25.0,  "price_per_unit": 150.00,   "notes": "SOL entry"},
+        {"symbol": "SOL",  "tx_type": "buy",  "quantity": 15.0,  "price_per_unit": 165.00,   "notes": "SOL DCA"},
+        {"symbol": "LINK", "tx_type": "buy",  "quantity": 100.0, "price_per_unit": 16.00,    "notes": "LINK position"},
+        {"symbol": "AVAX", "tx_type": "buy",  "quantity": 50.0,  "price_per_unit": 38.00,    "notes": "AVAX entry"}
+      ]
+    },
+    {
+      "name": "DeFi Wallet",
+      "network": "polygon",
+      "tokens": [
+        {"symbol": "MATIC", "name": "Polygon"},
+        {"symbol": "UNI",   "name": "Uniswap"},
+        {"symbol": "ATOM",  "name": "Cosmos"}
+      ],
+      "transactions": [
+        {"symbol": "MATIC", "tx_type": "buy",  "quantity": 5000.0, "price_per_unit": 0.80,  "notes": "MATIC for DeFi"},
+        {"symbol": "MATIC", "tx_type": "sell", "quantity": 1000.0, "price_per_unit": 0.95,  "notes": "Partial sell"},
+        {"symbol": "UNI",   "tx_type": "buy",  "quantity": 80.0,   "price_per_unit": 11.00, "notes": "UNI governance"},
+        {"symbol": "ATOM",  "tx_type": "buy",  "quantity": 120.0,  "price_per_unit": 10.50, "notes": "ATOM staking"}
+      ]
+    },
+    {
+      "name": "Trading Wallet",
+      "network": "ethereum",
+      "tokens": [
+        {"symbol": "XRP",  "name": "Ripple"},
+        {"symbol": "DOGE", "name": "Dogecoin"},
+        {"symbol": "ADA",  "name": "Cardano"},
+        {"symbol": "DOT",  "name": "Polkadot"}
+      ],
+      "transactions": [
+        {"symbol": "XRP",  "tx_type": "buy",  "quantity": 3000.0, "price_per_unit": 0.52,  "notes": "XRP swing trade"},
+        {"symbol": "XRP",  "tx_type": "sell", "quantity": 1500.0, "price_per_unit": 0.60,  "notes": "Partial exit"},
+        {"symbol": "DOGE", "tx_type": "buy",  "quantity": 10000.0,"price_per_unit": 0.14,  "notes": "DOGE yolo"},
+        {"symbol": "DOGE", "tx_type": "sell", "quantity": 5000.0, "price_per_unit": 0.18,  "notes": "Took profits"},
+        {"symbol": "ADA",  "tx_type": "buy",  "quantity": 2000.0, "price_per_unit": 0.55,  "notes": "ADA position"},
+        {"symbol": "DOT",  "tx_type": "buy",  "quantity": 200.0,  "price_per_unit": 7.50,  "notes": "DOT entry"},
+        {"symbol": "DOT",  "tx_type": "buy",  "quantity": 100.0,  "price_per_unit": 8.80,  "notes": "DOT DCA"}
+      ]
+    }
+  ]
+}
