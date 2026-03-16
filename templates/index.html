@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% block title %}CryptoScope - Portfolio Dashboard{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h2 class="cs-page-title">
+            <i class="fas fa-tachometer-alt me-2"></i>Portfolio Dashboard
+        </h2>
+    </div>
+</div>
+
+<!-- Summary Cards -->
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="cs-card cs-card-primary">
+            <div class="cs-card-label">Total Portfolio Value</div>
+            <div class="cs-card-value">${{ "%.2f"|format(summary.total_value) }}</div>
+            <div class="cs-card-change {% if summary.change_24h >= 0 %}text-success{% else %}text-danger{% endif %}">
+                <i class="fas fa-{% if summary.change_24h >= 0 %}arrow-up{% else %}arrow-down{% endif %}"></i>
+                {{ "%.2f"|format(summary.change_24h) }}% (24h)
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="cs-card cs-card-success">
+            <div class="cs-card-label">Total P&L</div>
+            <div class="cs-card-value {% if summary.total_pnl >= 0 %}text-success{% else %}text-danger{% endif %}">
+                ${{ "%.2f"|format(summary.total_pnl) }}
+            </div>
+            <div class="cs-card-sub">{{ "%.2f"|format(summary.pnl_percent) }}% return</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="cs-card cs-card-info">
+            <div class="cs-card-label">Unrealized P&L</div>
+            <div class="cs-card-value {% if summary.unrealized_pnl >= 0 %}text-success{% else %}text-danger{% endif %}">
+                ${{ "%.2f"|format(summary.unrealized_pnl) }}
+            </div>
+            <div class="cs-card-sub">Realized: ${{ "%.2f"|format(summary.realized_pnl) }}</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="cs-card cs-card-warning">
+            <div class="cs-card-label">Gas Fees Spent</div>
+            <div class="cs-card-value">${{ "%.4f"|format(gas_stats.total_fees_usd) }}</div>
+            <div class="cs-card-sub">Current: {{ gas_stats.current_gas_gwei }} Gwei</div>
+        </div>
+    </div>
+</div>
+
+<!-- Charts Row -->
+<div class="row g-3 mb-4">
+    <div class="col-md-5">
+        <div class="cs-panel">
+            <h5 class="cs-panel-title">Portfolio Allocation</h5>
+            <div class="chart-container" style="height:300px;">
+                <canvas id="allocationChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <div class="cs-panel">
+            <h5 class="cs-panel-title">Top Performers</h5>
+            <div class="table-responsive">
+                <table class="table cs-table">
+                    <thead>
+                        <tr>
+                            <th>Token</th>
+                            <th class="text-end">Value</th>
+                            <th class="text-end">P&L</th>
+                            <th class="text-end">P&L %</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for perf in top_performers %}
+                        <tr>
+                            <td><span class="cs-token-badge">{{ perf.symbol }}</span></td>
+                            <td class="text-end">${{ "%.2f"|format(perf.current_value) }}</td>
+                            <td class="text-end {% if perf.total_pnl >= 0 %}text-success{% else %}text-danger{% endif %}">
+                                ${{ "%.2f"|format(perf.total_pnl) }}
+                            </td>
+                            <td class="text-end {% if perf.pnl_percent >= 0 %}text-success{% else %}text-danger{% endif %}">
+                                {{ "%.2f"|format(perf.pnl_percent) }}%
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Price Ticker -->
+<div class="row g-3 mb-4">
+    <div class="col-12">
+        <div class="cs-panel">
+            <h5 class="cs-panel-title">Market Prices</h5>
+            <div class="cs-ticker-strip">
+                {% for symbol, data in prices.items() %}
+                <div class="cs-ticker-item">
+                    <span class="cs-ticker-symbol">{{ symbol }}</span>
+                    <span class="cs-ticker-price">${{ "%.2f"|format(data.price) if data.price > 1 else "%.6f"|format(data.price) }}</span>
+                    <span class="cs-ticker-change {% if data.change_24h >= 0 %}text-success{% else %}text-danger{% endif %}">
+                        {{ "%.2f"|format(data.change_24h) }}%
+                    </span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Allocation Data for JS -->
+<script>
+    window.allocationData = {{ summary.allocation_pct | tojson }};
+</script>
+{% endblock %}

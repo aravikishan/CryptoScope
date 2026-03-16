@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block title %}CryptoScope - About{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="cs-panel">
+            <h2 class="cs-page-title mb-4">
+                <i class="fas fa-info-circle me-2"></i>About CryptoScope
+            </h2>
+
+            <div class="mb-4">
+                <h5 class="cs-section-title">What is CryptoScope?</h5>
+                <p>
+                    CryptoScope is a cryptocurrency portfolio tracker that provides
+                    real-time P&L calculations, gas fee analysis, and market correlation
+                    charts. Track your holdings across multiple wallets, monitor market
+                    performance, and analyze your trading history.
+                </p>
+            </div>
+
+            <div class="mb-4">
+                <h5 class="cs-section-title">Features</h5>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="cs-feature-card">
+                            <i class="fas fa-chart-pie cs-feature-icon"></i>
+                            <h6>Portfolio Tracking</h6>
+                            <p class="small text-muted">
+                                Track token holdings with cost basis, unrealized and
+                                realized P&L calculations.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="cs-feature-card">
+                            <i class="fas fa-gas-pump cs-feature-icon"></i>
+                            <h6>Gas Fee Analysis</h6>
+                            <p class="small text-muted">
+                                Monitor gas prices with historical data, trends,
+                                and spending analytics.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="cs-feature-card">
+                            <i class="fas fa-exchange-alt cs-feature-icon"></i>
+                            <h6>Transaction Tracking</h6>
+                            <p class="small text-muted">
+                                Log buy, sell, and transfer transactions with automatic
+                                cost basis updates.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="cs-feature-card">
+                            <i class="fas fa-project-diagram cs-feature-icon"></i>
+                            <h6>Correlation Matrix</h6>
+                            <p class="small text-muted">
+                                Analyze price correlations between tokens for portfolio
+                                diversification.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <h5 class="cs-section-title">Tech Stack</h5>
+                <ul>
+                    <li><strong>Backend:</strong> Python 3.11, Flask, SQLAlchemy</li>
+                    <li><strong>Database:</strong> SQLite</li>
+                    <li><strong>Frontend:</strong> Bootstrap 5, Chart.js</li>
+                    <li><strong>Testing:</strong> pytest</li>
+                    <li><strong>Deployment:</strong> Docker, Gunicorn</li>
+                </ul>
+            </div>
+
+            <div class="mb-4">
+                <h5 class="cs-section-title">API Documentation</h5>
+                <div class="table-responsive">
+                    <table class="table cs-table">
+                        <thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+                        <tbody>
+                            <tr><td><span class="badge bg-success">GET</span></td><td>/api/wallets</td><td>List wallets</td></tr>
+                            <tr><td><span class="badge bg-primary">POST</span></td><td>/api/wallets</td><td>Create wallet</td></tr>
+                            <tr><td><span class="badge bg-success">GET</span></td><td>/api/wallets/:id</td><td>Wallet details</td></tr>
+                            <tr><td><span class="badge bg-danger">DELETE</span></td><td>/api/wallets/:id</td><td>Delete wallet</td></tr>
+                            <tr><td><span class="badge bg-primary">POST</span></td><td>/api/transactions</td><td>Execute transaction</td></tr>
+                            <tr><td><span class="badge bg-success">GET</span></td><td>/api/portfolio/summary</td><td>Portfolio summary</td></tr>
+                            <tr><td><span class="badge bg-success">GET</span></td><td>/api/market/prices</td><td>All token prices</td></tr>
+                            <tr><td><span class="badge bg-success">GET</span></td><td>/api/market/history/:sym</td><td>Price history</td></tr>
+                            <tr><td><span class="badge bg-success">GET</span></td><td>/api/market/correlation</td><td>Correlation matrix</td></tr>
+                            <tr><td><span class="badge bg-success">GET</span></td><td>/api/gas/current</td><td>Current gas price</td></tr>
+                            <tr><td><span class="badge bg-success">GET</span></td><td>/api/gas/history</td><td>Gas history</td></tr>
+                            <tr><td><span class="badge bg-success">GET</span></td><td>/api/gas/stats</td><td>Gas statistics</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="text-center text-muted mt-4">
+                <p>Built with Flask &amp; Chart.js &bull; MIT License</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

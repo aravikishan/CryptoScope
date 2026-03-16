@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+{% block title %}CryptoScope - Wallets{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12 d-flex justify-content-between align-items-center">
+        <h2 class="cs-page-title">
+            <i class="fas fa-wallet me-2"></i>
+            {% if wallet %}{{ wallet.name }}{% else %}Wallets{% endif %}
+        </h2>
+        <button class="btn cs-btn-primary" data-bs-toggle="modal" data-bs-target="#createWalletModal">
+            <i class="fas fa-plus me-1"></i>New Wallet
+        </button>
+    </div>
+</div>
+
+{% if wallet %}
+<!-- Single Wallet Detail -->
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="cs-card cs-card-primary">
+            <div class="cs-card-label">Network</div>
+            <div class="cs-card-value">{{ wallet.network | capitalize }}</div>
+            <div class="cs-card-sub text-truncate">{{ wallet.address }}</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="cs-card cs-card-info">
+            <div class="cs-card-label">Tokens Held</div>
+            <div class="cs-card-value">{{ tokens | length }}</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="cs-card cs-card-success">
+            <div class="cs-card-label">Total Value</div>
+            <div class="cs-card-value">
+                ${{ "%.2f"|format(tokens | sum(attribute='current_value') if tokens else 0) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Token Holdings -->
+<div class="row g-3 mb-4">
+    <div class="col-12">
+        <div class="cs-panel">
+            <h5 class="cs-panel-title">Token Holdings</h5>
+            <div class="table-responsive">
+                <table class="table cs-table">
+                    <thead>
+                        <tr>
+                            <th>Token</th>
+                            <th class="text-end">Balance</th>
+                            <th class="text-end">Avg Buy Price</th>
+                            <th class="text-end">Current Price</th>
+                            <th class="text-end">Value</th>
+                            <th class="text-end">Unrealized P&L</th>
+                            <th class="text-end">Realized P&L</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for t in tokens %}
+                        <tr>
+                            <td><span class="cs-token-badge">{{ t.symbol }}</span></td>
+                            <td class="text-end">{{ "%.6f"|format(t.balance) }}</td>
+                            <td class="text-end">${{ "%.2f"|format(t.avg_buy_price) }}</td>
+                            <td class="text-end">${{ "%.2f"|format(t.current_price) }}</td>
+                            <td class="text-end">${{ "%.2f"|format(t.current_value) }}</td>
+                            <td class="text-end {% if t.unrealized_pnl >= 0 %}text-success{% else %}text-danger{% endif %}">
+                                ${{ "%.2f"|format(t.unrealized_pnl) }}
+                            </td>
+                            <td class="text-end {% if t.realized_pnl >= 0 %}text-success{% else %}text-danger{% endif %}">
+                                ${{ "%.2f"|format(t.realized_pnl) }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Transactions -->
+<div class="row g-3 mb-4">
+    <div class="col-12">
+        <div class="cs-panel">
+            <h5 class="cs-panel-title">Recent Transactions</h5>
+            <div class="table-responsive">
+                <table class="table cs-table">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Token</th>
+                            <th class="text-end">Quantity</th>
+                            <th class="text-end">Price</th>
+                            <th class="text-end">Total</th>
+                            <th class="text-end">Gas Fee</th>
+                            <th>Hash</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tx in transactions %}
+                        <tr>
+                            <td>
+                                <span class="badge cs-badge-{{ tx.tx_type }}">{{ tx.tx_type | upper }}</span>
+                            </td>
+                            <td><span class="cs-token-badge">{{ tx.symbol }}</span></td>
+                            <td class="text-end">{{ "%.6f"|format(tx.quantity) }}</td>
+                            <td class="text-end">${{ "%.2f"|format(tx.price_per_unit) }}</td>
+                            <td class="text-end">${{ "%.2f"|format(tx.total_value) }}</td>
+                            <td class="text-end">${{ "%.4f"|format(tx.gas_fee) }}</td>
+                            <td class="text-truncate" style="max-width:120px;">{{ tx.tx_hash }}</td>
+                            <td>{{ tx.timestamp.strftime('%Y-%m-%d %H:%M') if tx.timestamp else '' }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% else %}
+<!-- Wallet List -->
+<div class="row g-3">
+    {% if wallets %}
+        {% for w in wallets %}
+        <div class="col-md-4">
+            <div class="cs-panel cs-wallet-card">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <h5 class="cs-panel-title mb-0">{{ w.name }}</h5>
+                    <span class="badge bg-info">{{ w.network }}</span>
+                </div>
+                <p class="text-muted text-truncate small mb-2">{{ w.address }}</p>
+                <p class="mb-2"><strong>{{ w.tokens | length }}</strong> tokens</p>
+                <a href="/wallet/{{ w.id }}" class="btn cs-btn-primary btn-sm">
+                    <i class="fas fa-eye me-1"></i>View Details
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="col-12">
+            <div class="cs-panel text-center py-5">
+                <i class="fas fa-wallet fa-3x mb-3 text-muted"></i>
+                <h5>No wallets yet</h5>
+                <p class="text-muted">Create a wallet to start tracking your crypto portfolio.</p>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endif %}
+
+<!-- Create Wallet Modal -->
+<div class="modal fade" id="createWalletModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content cs-modal">
+            <div class="modal-header">
+                <h5 class="modal-title">Create Wallet</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Wallet Name</label>
+                    <input type="text" class="form-control cs-input" id="walletName" placeholder="My Wallet">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Network</label>
+                    <select class="form-select cs-input" id="walletNetwork">
+                        <option value="ethereum">Ethereum</option>
+                        <option value="polygon">Polygon</option>
+                        <option value="solana">Solana</option>
+                        <option value="avalanche">Avalanche</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn cs-btn-primary" onclick="createWallet()">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

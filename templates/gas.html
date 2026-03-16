@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block title %}CryptoScope - Gas Fee Tracker{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h2 class="cs-page-title">
+            <i class="fas fa-gas-pump me-2"></i>Gas Fee Tracker
+        </h2>
+    </div>
+</div>
+
+<!-- Gas Stats Cards -->
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="cs-card cs-card-primary">
+            <div class="cs-card-label">Current Gas Price</div>
+            <div class="cs-card-value">{{ "%.2f"|format(gas_stats.current_gas_gwei) }} Gwei</div>
+            <div class="cs-card-sub">${{ "%.4f"|format(gas_stats.current_fee_usd) }} per tx</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="cs-card cs-card-info">
+            <div class="cs-card-label">Average Gas</div>
+            <div class="cs-card-value">{{ "%.2f"|format(gas_stats.avg_gas_gwei) }} Gwei</div>
+            <div class="cs-card-sub">Across {{ gas_stats.total_transactions }} txns</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="cs-card cs-card-warning">
+            <div class="cs-card-label">Peak Gas</div>
+            <div class="cs-card-value">{{ "%.2f"|format(gas_stats.max_gas_gwei) }} Gwei</div>
+            <div class="cs-card-sub">Min: {{ "%.2f"|format(gas_stats.min_gas_gwei) }} Gwei</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="cs-card cs-card-danger">
+            <div class="cs-card-label">Total Fees Spent</div>
+            <div class="cs-card-value">${{ "%.4f"|format(gas_stats.total_fees_usd) }}</div>
+            <div class="cs-card-sub">All time</div>
+        </div>
+    </div>
+</div>
+
+<!-- Gas Gauge and Chart -->
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="cs-panel text-center">
+            <h5 class="cs-panel-title">Gas Gauge</h5>
+            <div class="cs-gas-gauge-container">
+                <canvas id="gasGauge" width="250" height="180"></canvas>
+                <div class="cs-gas-label">
+                    <span id="gasGaugeValue">{{ "%.1f"|format(gas_stats.current_gas_gwei) }}</span> Gwei
+                </div>
+            </div>
+            <div class="mt-2">
+                <span class="badge bg-success">Low &lt;20</span>
+                <span class="badge bg-warning text-dark">Med 20-50</span>
+                <span class="badge bg-danger">High &gt;50</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="cs-panel">
+            <h5 class="cs-panel-title">Gas Price History (30 Days)</h5>
+            <div class="chart-container" style="height:300px;">
+                <canvas id="gasHistoryChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Gas History Table -->
+<div class="row g-3">
+    <div class="col-12">
+        <div class="cs-panel">
+            <h5 class="cs-panel-title">Daily Gas Summary</h5>
+            <div class="table-responsive">
+                <table class="table cs-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th class="text-end">Avg Gas (Gwei)</th>
+                            <th class="text-end">Min Gas (Gwei)</th>
+                            <th class="text-end">Max Gas (Gwei)</th>
+                            <th class="text-end">Avg Fee (USD)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for g in gas_history | reverse %}
+                        <tr>
+                            <td>{{ g.date }}</td>
+                            <td class="text-end">{{ "%.2f"|format(g.avg_gas_gwei) }}</td>
+                            <td class="text-end text-success">{{ "%.2f"|format(g.min_gas_gwei) }}</td>
+                            <td class="text-end text-danger">{{ "%.2f"|format(g.max_gas_gwei) }}</td>
+                            <td class="text-end">${{ "%.4f"|format(g.avg_fee_usd) }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.gasHistory = {{ gas_history | tojson }};
+    window.currentGas = {{ gas_stats.current_gas_gwei }};
+</script>
+{% endblock %}

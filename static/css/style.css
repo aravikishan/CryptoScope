@@ -1,0 +1,317 @@
+/* ============================================================
+   CryptoScope -- Crypto Dark Theme with Purple/Blue Gradients
+   ============================================================ */
+
+:root {
+    --cs-bg-dark: #0a0e17;
+    --cs-bg-card: #111827;
+    --cs-bg-panel: #151c2c;
+    --cs-border: #1e293b;
+    --cs-purple: #8b5cf6;
+    --cs-purple-dark: #6d28d9;
+    --cs-blue: #3b82f6;
+    --cs-blue-dark: #1d4ed8;
+    --cs-cyan: #06b6d4;
+    --cs-green: #10b981;
+    --cs-red: #ef4444;
+    --cs-yellow: #f59e0b;
+    --cs-text: #e2e8f0;
+    --cs-text-muted: #94a3b8;
+    --cs-neon-purple: #a855f7;
+    --cs-neon-blue: #60a5fa;
+    --cs-gradient-primary: linear-gradient(135deg, var(--cs-purple) 0%, var(--cs-blue) 100%);
+    --cs-gradient-dark: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
+    --cs-gradient-card: linear-gradient(145deg, #1a1f35 0%, #111827 100%);
+}
+
+body {
+    background: var(--cs-bg-dark);
+    color: var(--cs-text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    min-height: 100vh;
+}
+
+/* Navbar */
+.cs-navbar {
+    background: var(--cs-gradient-dark);
+    border-bottom: 1px solid var(--cs-border);
+    box-shadow: 0 2px 20px rgba(139, 92, 246, 0.1);
+    padding: 0.75rem 1rem;
+}
+
+.cs-brand {
+    font-weight: 700;
+    font-size: 1.35rem;
+    background: var(--cs-gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.cs-navbar .nav-link {
+    color: var(--cs-text-muted);
+    transition: color 0.2s, text-shadow 0.2s;
+    margin: 0 0.25rem;
+}
+
+.cs-navbar .nav-link:hover,
+.cs-navbar .nav-link.active {
+    color: var(--cs-neon-purple);
+    text-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
+}
+
+/* Page titles */
+.cs-page-title {
+    font-weight: 700;
+    font-size: 1.5rem;
+    background: var(--cs-gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.cs-section-title {
+    color: var(--cs-neon-blue);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+/* Cards */
+.cs-card {
+    background: var(--cs-gradient-card);
+    border: 1px solid var(--cs-border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.cs-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(139, 92, 246, 0.15);
+}
+
+.cs-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+}
+
+.cs-card-primary::before { background: var(--cs-gradient-primary); }
+.cs-card-success::before { background: linear-gradient(90deg, var(--cs-green), #34d399); }
+.cs-card-info::before    { background: linear-gradient(90deg, var(--cs-cyan), var(--cs-blue)); }
+.cs-card-warning::before { background: linear-gradient(90deg, var(--cs-yellow), #fbbf24); }
+.cs-card-danger::before  { background: linear-gradient(90deg, var(--cs-red), #f87171); }
+
+.cs-card-label {
+    font-size: 0.8rem;
+    color: var(--cs-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+}
+
+.cs-card-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.cs-card-change { font-size: 0.85rem; font-weight: 500; }
+.cs-card-sub    { font-size: 0.8rem; color: var(--cs-text-muted); }
+
+/* Panels */
+.cs-panel {
+    background: var(--cs-bg-panel);
+    border: 1px solid var(--cs-border);
+    border-radius: 12px;
+    padding: 1.25rem;
+}
+
+.cs-panel-title {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--cs-neon-blue);
+    margin-bottom: 1rem;
+}
+
+/* Tables */
+.cs-table {
+    color: var(--cs-text);
+    margin-bottom: 0;
+}
+
+.cs-table thead th {
+    border-bottom: 1px solid var(--cs-border);
+    color: var(--cs-text-muted);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.75rem;
+}
+
+.cs-table tbody td {
+    border-bottom: 1px solid rgba(30, 41, 59, 0.5);
+    padding: 0.65rem 0.75rem;
+    vertical-align: middle;
+}
+
+.cs-table tbody tr:hover {
+    background: rgba(139, 92, 246, 0.05);
+}
+
+/* Token badge */
+.cs-token-badge {
+    display: inline-block;
+    background: var(--cs-gradient-primary);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.2em 0.6em;
+    border-radius: 6px;
+    letter-spacing: 0.04em;
+}
+
+/* Transaction type badges */
+.cs-badge-buy      { background: var(--cs-green) !important; }
+.cs-badge-sell     { background: var(--cs-red) !important; }
+.cs-badge-transfer { background: var(--cs-blue) !important; }
+
+/* Buttons */
+.cs-btn-primary {
+    background: var(--cs-gradient-primary);
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 0.5rem 1.25rem;
+    transition: box-shadow 0.2s, transform 0.1s;
+}
+
+.cs-btn-primary:hover {
+    box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+    transform: translateY(-1px);
+    color: #fff;
+}
+
+/* Inputs */
+.cs-input {
+    background: var(--cs-bg-dark);
+    border: 1px solid var(--cs-border);
+    color: var(--cs-text);
+    border-radius: 8px;
+}
+
+.cs-input:focus {
+    background: var(--cs-bg-dark);
+    border-color: var(--cs-purple);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+    color: var(--cs-text);
+}
+
+/* Modal */
+.cs-modal {
+    background: var(--cs-bg-panel);
+    border: 1px solid var(--cs-border);
+}
+
+.cs-modal .modal-header { border-color: var(--cs-border); }
+.cs-modal .modal-footer { border-color: var(--cs-border); }
+
+/* Ticker strip */
+.cs-ticker-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 0.5rem 0;
+}
+
+.cs-ticker-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 8px;
+    background: rgba(139, 92, 246, 0.08);
+    border: 1px solid rgba(139, 92, 246, 0.15);
+    transition: border-color 0.2s;
+}
+
+.cs-ticker-item:hover { border-color: var(--cs-neon-purple); }
+.cs-ticker-symbol { font-weight: 700; font-size: 0.85rem; color: var(--cs-neon-purple); }
+.cs-ticker-price  { font-weight: 600; font-size: 0.85rem; }
+.cs-ticker-change { font-size: 0.8rem; font-weight: 500; }
+
+/* Sparkline canvas */
+.cs-sparkline { display: inline-block; vertical-align: middle; }
+
+/* Gas gauge */
+.cs-gas-gauge-container { position: relative; display: inline-block; }
+.cs-gas-label {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--cs-text);
+}
+
+/* Feature cards (about) */
+.cs-feature-card {
+    background: var(--cs-gradient-card);
+    border: 1px solid var(--cs-border);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    transition: border-color 0.2s;
+}
+
+.cs-feature-card:hover { border-color: var(--cs-neon-purple); }
+
+.cs-feature-icon {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    background: var(--cs-gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Wallet card */
+.cs-wallet-card {
+    transition: transform 0.2s, border-color 0.2s;
+}
+.cs-wallet-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--cs-neon-purple);
+}
+
+/* Footer */
+.cs-footer {
+    border-top: 1px solid var(--cs-border);
+    background: var(--cs-bg-panel);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--cs-bg-dark); }
+::-webkit-scrollbar-thumb {
+    background: var(--cs-purple-dark);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--cs-purple); }
+
+/* Chart containers */
+.chart-container { position: relative; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .cs-card-value { font-size: 1.2rem; }
+    .cs-ticker-strip { gap: 0.5rem; }
+    .cs-ticker-item { padding: 0.3rem 0.5rem; }
+}
