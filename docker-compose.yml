@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  cryptoscope:
+    build: .
+    container_name: cryptoscope
+    ports:
+      - "8010:8010"
+    environment:
+      - CRYPTOSCOPE_PORT=8010
+      - CRYPTOSCOPE_DEBUG=false
+    volumes:
+      - db_data:/app/instance
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8010/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  db_data:
