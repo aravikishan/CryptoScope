@@ -15,7 +15,7 @@ from routes.api import api_bp
 from routes.views import views_bp
 
 
-# Updated for clarity
+# v1.0.1 - Updated for clarity
 def create_app(testing=False):
     """Application factory for CryptoScope."""
     app = Flask(__name__)
